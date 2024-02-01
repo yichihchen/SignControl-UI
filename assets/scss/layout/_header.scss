@@ -1,4 +1,19 @@
 .header{
-  background: #69F0AE;
-  font-size: 64px;
+  background-color: $bg-color;
+}
+.logo {
+  // width: 120px;
+  // height: 80px;
+  // background-image: url(/assets/images/解析度高logo.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.account-frame{
+  width: 64px;
+  height: 64px;
+  background-image: url(/assets/images/阿通大頭照.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }

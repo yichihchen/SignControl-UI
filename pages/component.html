@@ -4,24 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>index</title>
+    <title>component</title>
   </head>
   <body>
     <%- include('./layout/header'); -%>
-
-   
-
-   <div class="container">
-   <a href="./component.html">component</a>
-   </div>
-
- 
-
+    
+    <div class="sidebar">
+      <ul class="text-white fs-3">
+        <li class="py-3">Control</li>
+        <li class="py-3">Transmitter</li>
+        <li class="py-3">Receiver</li>
+        <li class="py-3">Source device</li>
+        <li class="py-3">Display unit</li>
+        <li class="py-3">User &  Group</li>
+      </ul>
+    </div>
     <%- include('./layout/footer'); -%>
 
     <script type="module" src="../main.js"></script>
-    <script>
-      
-    </script>
   </body>
 </html>

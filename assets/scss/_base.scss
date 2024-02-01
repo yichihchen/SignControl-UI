@@ -13,12 +13,11 @@ img {
     vertical-align: middle;
 }
 
-.container {
-    max-width: 992px; 
+.container {   //這裡直接吃到bootstraps的container樣式
+    max-width: 1440px; 
     margin: 0 auto;
     padding: 0 12px;  
-    
-    
+        
   
 }
 

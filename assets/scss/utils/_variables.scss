@@ -488,7 +488,7 @@ $border-widths: (
 ) !default;
 
 $border-style:                solid !default;
-$border-color:                $gray-300 !default;
+$border-color:                $gray-500!default; //$gray-300
 $border-color-translucent:    rgba($black, .175) !default;
 // scss-docs-end border-variables
 
@@ -1420,7 +1420,7 @@ $modal-footer-border-color:         $modal-header-border-color !default;
 $modal-footer-border-width:         $modal-header-border-width !default;
 
 $modal-sm:                          300px !default;
-$modal-md:                          500px !default;
+$modal-md:                          1000px !default;   //500px
 $modal-lg:                          800px !default;
 $modal-xl:                          1140px !default;
 

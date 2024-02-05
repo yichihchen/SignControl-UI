@@ -29,21 +29,24 @@
         </div>
 
         <button type="button" class="btn text-white createDisplayUnit" data-bs-toggle="modal"
-          data-bs-target="#exampleModal">
+          data-bs-target="#exampleModalToggle">
           <img src="../assets/images/add-square.png" alt="新增icon" class="pe-2">Create display unit
         </button>
       </div>
 
 
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      <!-- modal 不只一個 -->
+
+      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              Show a second modal and hide this one with the button below.
               <h5>Create display unit</h5>
               <div>
                 <p>Location group</p>
@@ -54,7 +57,6 @@
                   <option value="3">location group C</option>
                 </select>
               </div>
-
               <div class="d-flex">
                 <div>
                   <p>Display unit model</p>
@@ -73,7 +75,6 @@
                   </select>
                 </div>
               </div>
-
               <h5 class="mt-4">Display unit 2</h5>
               <div class="d-flex">
                 <div>
@@ -91,28 +92,46 @@
                     <div><span>column</span>
                       <input type="number" id="DisplayUnitColumn" size="50" name="DisplayUnitRatio2" min="1" max="16">
                     </div>
-
                   </div>
                 </div>
               </div>
-              <!-- display show -->
+
               <div class="displayGrid" id="displayGrid">
                 <!-- 加入display Unit  在JS -->
-
               </div>
+              <!-- modal body end -->
 
-
-              <!-- display show end -->
-            </div> <!-- modal-body end -->
+            </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+                data-bs-dismiss="modal">Open second modal</button>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Hide this modal and show the first with the button below.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                data-bs-dismiss="modal">Back to first</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
 
-      <!-- modal end-->
+      <!-- modal 不只一個 end-->
+
+     
 
     </div>
     </div> <!-- container-fluid  -->
@@ -150,10 +169,10 @@
           const colValue = DisplayUnitColumn.value;
           let template = "";
           for (let i = 0; i < rowValue; i++) {
-            template = template + `<div class="row" data-rownum="${i + 1}">`;
+            template = template + `<div class="row row-style" data-rownum="${i + 1}">`;
 
             for (let j = 0; j < colValue; j++) {
-              template = template + `<div class="col" data-Colnum="${j + 1}">col</div>`;
+              template = template + `<div class="col col-style border border-1 py-4 m-1 text-center fs-4 rounded" data-Colnum="${j + 1}">${j + 1}</div>`;
             }
 
             template += `</div>`;

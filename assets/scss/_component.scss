@@ -1,16 +1,17 @@
 //sidebar
-.sidebar{
+.sidebar {
     width: 100%;
     height: fit-content;
-    background-color:$bg-color;
-    ul{
-        li{
-            border:1px solid red;
-            border-radius:1.5rem;
-            &:hover{
-                background: linear-gradient(270deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4));  //斜角度透明
+    background-color: $bg-color;
+
+    ul {
+        li {
+            border-radius: 1.5rem;
+
+            &:hover {
+                background: linear-gradient(270deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1)); //斜角度透明
             }
         }
     }
-    
+
 }

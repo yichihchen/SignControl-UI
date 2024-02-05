@@ -1,27 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>index</title>
-  </head>
-  <body>
-    <%- include('./layout/header'); -%>
 
-   
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>index</title>
+</head>
 
-   <div class="container">
-   <a href="./component.html">component</a>
-   </div>
+<body>
+  <%- include('./layout/header'); -%>
+    <!-- 標題部分 -->
+    <div class="container-fluid px-4">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h2 class="text-white">Display unit </h2>
+          <p class="text-white">see your display unit information in here!</p>
+          <!-- BS5 下拉式選單 -->
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Select location group here!</option>
+            <option value="1">location group A</option>
+            <option value="2">location group B</option>
+            <option value="3">location group C</option>
+          </select>
+        </div>
 
- 
+        <button type="button" class="btn text-white createDisplayUnit" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          <img src="../assets/images/add-square.png" alt="新增icon" class="pe-2">Create display unit
+        </button>
+      </div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h5>Create display unit</h5>
+              <div>
+                <p>Location group</p>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Select location group here!</option>
+                  <option value="1">location group A</option>
+                  <option value="2">location group B</option>
+                  <option value="3">location group C</option>
+                </select>
+              </div>
+
+              <div class="d-flex">
+                <div>
+                  <p>Display unit model</p>
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>Samsung S8 monitor</option>
+                    <option value="1">Samsung S5 monitor</option>
+                    <option value="2">Samsung S6 monitor </option>
+                    <option value="3">Samsung S7 monitor </option>
+                  </select>
+                </div>
+                <div>
+                  <p>Video port</p>
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>HDMI</option>
+                    <option value="1">VGA</option>
+                  </select>
+                </div>
+              </div>
+
+              <h5 class="mt-4">Display unit 2</h5>
+              <div class="d-flex">
+                <div>
+                  <p>Display Unit Name</p>
+                  <input type="text" id="DisplayUnitName" placehoder="type your display unit name">
+                </div>
+
+                <div>
+                  <p>Ratio</p>
+                  <!-- input -->
+                  <div class="d-flex ratio-input">
+                    <div><span>row</span>
+                      <input type="number" id="DisplayUnitRow" size="50" name="DisplayUnitRatio1" min="1" max="16">
+                    </div>
+                    <div><span>column</span>
+                      <input type="number" id="DisplayUnitColumn" size="50" name="DisplayUnitRatio2" min="1" max="16">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- display show -->
+              <div class="displayGrid" id="displayGrid">
+                <div class="row" data-rownum="1">
+                  <div class="col" data-colnum="1">col</div>
+                  <div class="col">col</div>
+                  <div class="col">col</div>
+                  <div class="col">col</div>
+                </div>
+                <div class="row" data-rownum="1">
+                  <div class="col" data-colnum="1">col</div>
+                  <div class="col">col</div>
+                  <div class="col">col</div>
+                  <div class="col">col</div>
+                </div>
+              </div>
+
+
+              <!-- display show end -->
+            </div> <!-- modal-body end -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal end-->
+
+    </div>
+    </div> <!-- container-fluid  -->
+
+
+    <div class="container">
+      <a href="./component.html">component</a>
+    </div>
+
+
 
     <%- include('./layout/footer'); -%>
 
-    <script type="module" src="../main.js"></script>
-    <script>
-      
-    </script>
-  </body>
+      <script type="module" src="../main.js"></script>
+      <script>
+
+        //input:選取DisplayGrid欄和列數量
+        const DisplayUnitRow = document.getElementById('DisplayUnitRow');
+        const DisplayUnitColumn = document.getElementById('DisplayUnitColumn');
+        const saveChanges = document.getElementById('saveChanges');
+
+        let DisplayUnitNumber = "";
+        //使DisplayUnitRow & DisplayUnitColumn都使用'change'監聽
+        DisplayUnitRow.addEventListener('change', handleRowChange);
+        DisplayUnitColumn.addEventListener('change', handleRowChange);
+
+        //innerHTML插入目的地
+        const displayGrid = document.getElementById('displayGrid');
+
+        //render:先插入row 再插入col
+       
+        function handleRowChange(item) {
+          
+          const rowValue = DisplayUnitRow.value;
+          const colValue = DisplayUnitColumn.value;
+          let template = "";
+          for (let i = 0; i < rowValue; i++) {
+            template = template + `<div class="row" data-rownum="${i + 1}">`;
+            
+              for (let j = 0; j < colValue; j++) {
+                template = template + `<div class="col" data-Colnum="${j + 1}">col</div>`;
+              }
+            
+            template += `</div>`;
+          }
+          displayGrid.innerHTML = template;
+        }
+
+
+
+      </script>
+</body>
+
 </html>

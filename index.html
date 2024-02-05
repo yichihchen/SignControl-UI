@@ -107,18 +107,8 @@
               </div>
               <!-- display show -->
               <div class="displayGrid" id="displayGrid">
-                <div class="row" data-rownum="1">
-                  <div class="col" data-colnum="1">col</div>
-                  <div class="col">col</div>
-                  <div class="col">col</div>
-                  <div class="col">col</div>
-                </div>
-                <div class="row" data-rownum="1">
-                  <div class="col" data-colnum="1">col</div>
-                  <div class="col">col</div>
-                  <div class="col">col</div>
-                  <div class="col">col</div>
-                </div>
+                <!-- 加入display Unit  在JS -->
+
               </div>
 
 
@@ -145,7 +135,7 @@
 
 
     
-      npm 
+      npm
       <script>
 
         //input:選取DisplayGrid欄和列數量
@@ -162,19 +152,19 @@
         const displayGrid = document.getElementById('displayGrid');
 
         //render:先插入row 再插入col
-       
+
         function handleRowChange(item) {
-          
+
           const rowValue = DisplayUnitRow.value;
           const colValue = DisplayUnitColumn.value;
           let template = "";
           for (let i = 0; i < rowValue; i++) {
             template = template + `<div class="row" data-rownum="${i + 1}">`;
-            
-              for (let j = 0; j < colValue; j++) {
-                template = template + `<div class="col" data-Colnum="${j + 1}">col</div>`;
-              }
-            
+
+            for (let j = 0; j < colValue; j++) {
+              template = template + `<div class="col" data-Colnum="${j + 1}">col</div>`;
+            }
+
             template += `</div>`;
           }
           displayGrid.innerHTML = template;

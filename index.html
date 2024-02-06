@@ -116,7 +116,7 @@
                 </div>
               </div>
 
-              <div class="displayGrid" id="displayGrid">
+              <div class="displayGrid px-4" id="displayGrid">
                 <!-- 加入display Unit  在JS -->
               </div>
 
@@ -214,7 +214,7 @@
             template = template + `<div class="row row-style" data-rownum="${i + 1}">`;
 
             for (let j = 0; j < colValue; j++) {
-              const colData = `<div class="col col-style border border-1 py-4 m-1 text-center fs-4 rounded" data-colnum="${j + 1}">R${i + 1} C${j + 1}</div>`;
+              const colData = `<div class="col col-style border border-1 py-2 m-1 text-center fs-6 rounded" data-colnum="${j + 1}">R${i + 1} C${j + 1}</div>`;
               template = template + colData;
               //將資料存取入陣列
               arrayData.push({

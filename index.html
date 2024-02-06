@@ -266,7 +266,7 @@
           const sourceDeviceList = `<select class="form-select" aria-label="Default select example"><option selected>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
 
           arrayData.forEach(function (item, index) {
-            allNumber += `<div class="d-flex"><span>${index + 1}.&nbsp</span><img src="../assets/images/Transmitter-arrow.png" alt="箭頭">${transmitterList}${receiverList}<img src="../assets/images/Transmitter-arrow.png" alt="箭頭">${sourceDeviceList}</div>`;
+            allNumber += `<div class="d-flex"><span>${index + 1}.&nbsp</span><img src="/assets/images/Transmitter-arrow.png" alt="箭頭">${transmitterList}${receiverList}<img src="/assets/images/Transmitter-arrow.png" alt="箭頭">${sourceDeviceList}</div>`;
           })
           displayTableContent.innerHTML = allNumber;
         }

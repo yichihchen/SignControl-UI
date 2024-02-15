@@ -9,8 +9,8 @@
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>index</title>
-  <script type="module" crossorigin src="/SignControl-UI/assets/main-c678b7be.js"></script>
-  <link rel="stylesheet" href="/SignControl-UI/assets/main-59063f1d.css">
+  <script type="module" crossorigin src="/SignControl-UI/assets/main-9e186778.js"></script>
+  <link rel="stylesheet" href="/SignControl-UI/assets/main-26dba27c.css">
 </head>
 
 <body>
@@ -214,7 +214,7 @@
             template = template + `<div class="row row-style" data-rownum="${i + 1}">`;
 
             for (let j = 0; j < colValue; j++) {
-              const colData = `<div class="col col-style border border-1 py-2 m-1 text-center fs-6 rounded" data-colnum="${j + 1}">R${i + 1} C${j + 1}</div>`;
+              const colData = `<div class="col col-style border border-1 py-2 m-1 text-center fs-6 rounded" data-rownum="${i + 1}" data-colnum="${j + 1}" >R${i + 1} C${j + 1}</div>`;
               template = template + colData;
               //將資料存取入陣列
               arrayData.push({
@@ -237,39 +237,92 @@
             // 排列下方的 TR 配對 List
             //map: 將T元素映射到新陣列
             arrayTransmitter = arrayData.map(function (item, index) {
-              return `<option value="${index + 1}">T${index + 1}</option>`;
+              return `<option value="${index + 1}" id="Trow${item.row}col${item.col}value${index + 1}">T${index + 1}</option>`;
             });
 
             //map: 將R元素映射到新陣列
             arrayReceiver = arrayData.map(function (item, index) {
-              return `<option value="${index + 1}">R${index + 1}</option>`; //修改:這裡的 arrayData & index要依照source device有幾台來決定
+              return `<option value="${index + 1}" id="Rrow${item.row}col${item.col}value${index + 1}">R${index + 1}</option>`; //修改:這裡的 arrayData(create receiver) & index要依照source device有幾台來決定
             });
 
 
             //下拉式選單元件
             // displayTableContent.innerHTML = `<div class="d-flex"><select class="form-select" aria-label="Default select example"><option selected>選擇 Transmitter${arrayTransmitter.join('')}</option></select><select class="form-select" aria-label="Default select example"><option selected>選擇 Receiver${arrayReceiver.join('')}</option></select></div>`; //修改
             allDisplayTableContent();
+
+
           })
-
+          selectTheWall();
         }
-
-
 
 
         //將arrayData數量整個拉出來,幾個電視牆下面就有幾個list的功能
         function allDisplayTableContent() {
           let allNumber = "";
           //因為簡潔，宣告變數
-          const transmitterList = `<select class="form-select my-1 me-2" aria-label="Default select example"><option selected>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
-          const receiverList = `<select class="form-select my-1" aria-label="Default select example"><option selected>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
-          //下面修改
-          const sourceDeviceList = `<select class="form-select my-1" aria-label="Default select example"><option selected>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
-
           arrayData.forEach(function (item, index) {
-            allNumber += `<div class="d-flex align-items-center my-2"><span>${index + 1}.&nbsp</span><span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${transmitterList}${receiverList}<span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${sourceDeviceList}</div>`;
+            const transmitterList = `<select class="form-select my-2 me-2" aria-label="Default select example" id="Trow${item.row}col${item.col}"><option>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
+            const receiverList = `<select class="form-select my-2" aria-label="Default select example" id="Rrow${item.row}col${item.col}"><option>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
+            //下面修改
+            const sourceDeviceList = `<select class="form-select my-2" aria-label="Default select example"><option>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
+
+
+            allNumber += `<div class="d-flex align-items-center"><span>${index + 1}.&nbsp</span>R${item.row}C${item.col}<span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${transmitterList}${receiverList}<span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${sourceDeviceList}</div>`;
           })
           displayTableContent.innerHTML = allNumber;
         }
+
+
+        //點擊上方電視牆 >> 呈現白色
+        //這個功能切記塞到handleRowChange()內 才能執行
+
+        function selectTheWall() {
+          const selectTVWall = document.querySelectorAll('.col');
+          const selectLists = document.querySelectorAll('select');
+
+          selectTVWall.forEach(function (item) {
+            item.addEventListener('click', function (e) {
+              selectTVWall.forEach(function (otherItem) {
+
+                //再迴圈一次要清掉反白的css
+                otherItem.classList.remove('highlight');
+                //先把已反白的col的id抓出來
+                console.log(item);
+
+              })
+              // 將被點擊的元素加上反白效果
+              e.target.classList.add('highlight');
+              const targetRownum = e.target.dataset.rownum;  //正確取得data-rownum
+              const targetColnum = e.target.dataset.colnum;  //正確取得data-colnum
+
+              console.log(targetRownum);
+              console.log(targetColnum);
+
+              //點擊上方電視牆 >> 下方List呈現readonly或可以編輯
+              selectLists.forEach(function (e) {
+                //先移除所有的readonly
+                e.disabled = false;
+                if (e.id === `Trow${targetRownum}col${targetColnum}`) {
+                  console.log(`Trow${targetRownum}col${targetColnum}`)
+
+                } else {
+                  //id符合條件才能編輯下拉式選單
+                  e.disabled = true;
+                  e.classList.add('text-readonly'); //要改
+                }
+              })
+
+            })
+
+
+          })
+        }
+
+
+
+
+
+
 
       </script>
 </body>

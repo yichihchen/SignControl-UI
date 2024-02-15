@@ -252,10 +252,10 @@
           let allNumber = "";
           //因為簡潔，宣告變數
           arrayData.forEach(function (item, index) {
-            const transmitterList = `<select class="form-select my-2 me-2" aria-label="Default select example" id="Trow${item.row}col${item.col}"><option>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
-            const receiverList = `<select class="form-select my-2" aria-label="Default select example" id="Rrow${item.row}col${item.col}"><option>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
+            const transmitterList = `<select class="form-select my-2 me-2" aria-label="Default select example" id="Trow${item.row}col${item.col}" disabled><option>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
+            const receiverList = `<select class="form-select my-2" aria-label="Default select example" id="Rrow${item.row}col${item.col}" disabled><option>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
             //下面修改
-            const sourceDeviceList = `<select class="form-select my-2" aria-label="Default select example"><option>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
+            const sourceDeviceList = `<select class="form-select my-2" aria-label="Default select example" disabled><option>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
 
 
             allNumber += `<div class="d-flex align-items-center"><span>${index + 1}.&nbsp</span>R${item.row}C${item.col}<span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${transmitterList}${receiverList}<span class="mx-2"><i class="fa-solid fa-arrow-right"></i></span>${sourceDeviceList}</div>`;
@@ -283,6 +283,7 @@
               })
               // 將被點擊的元素加上反白效果
               e.target.classList.add('highlight');
+
               const targetRownum = e.target.dataset.rownum;  //正確取得data-rownum
               const targetColnum = e.target.dataset.colnum;  //正確取得data-colnum
 
@@ -290,16 +291,18 @@
               console.log(targetColnum);
 
               //點擊上方電視牆 >> 下方List呈現readonly或可以編輯
+              //****這裡還要再改****
               selectLists.forEach(function (e) {
                 //先移除所有的readonly
                 e.disabled = false;
-                if (e.id === `Trow${targetRownum}col${targetColnum}`) {
-                  console.log(`Trow${targetRownum}col${targetColnum}`)
-
+                //讓點選過的col符合條件的 T & R List 皆可編輯
+                if (e.id === `Trow${targetRownum}col${targetColnum}` || e.id === `Rrow${targetRownum}col${targetColnum}`) {
+                  console.log(`Trow${targetRownum}col${targetColnum}`);
+                  console.log(`Rrow${targetRownum}col${targetColnum}`);
                 } else {
                   //id符合條件才能編輯下拉式選單
                   e.disabled = true;
-                  e.classList.add('text-readonly'); //要改
+
                 }
               })
 

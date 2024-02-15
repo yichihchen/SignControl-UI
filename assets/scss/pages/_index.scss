@@ -6,4 +6,14 @@
   background-color: $bg-color;
 }
 
-//grid樣式
+
+//col反白
+.highlight {
+  background-color: #ffffff; // 這裡可以根據需要調整顏色
+  color: black;
+}
+
+//當List呈現readonly時，字體反灰
+.text-readonly{
+  color:gray;
+}

@@ -196,17 +196,25 @@
 
         const displayTableContent = document.getElementById('displayTableContent');
 
-        //放置Transmitter所產生的陣列
+        //放置Transmitter所產生的陣列，從系統其他頁面直接新增的T設備
         let arrayTransmitter = [];  //拉到外面 由字串改定義成陣列
 
-        //放置Receiver所產生的陣列
+        //放置Receiver所產生的陣列，從系統其他頁面直接新增的R設備
         let arrayReceiver = [];
+
+        //轉換成Map物件，以利後續map操作
+        const tvWallInformation = new Map();
 
 
         //render:先插入row 再插入col
 
         //將row & col儲存到陣列資料內
         const arrayData = [];
+
+        //selectedTransmitter
+        const selectedTransmitter = [];
+
+
         function handleRowChange() {
 
           const rowValue = DisplayUnitRow.value;
@@ -220,7 +228,7 @@
             template = template + `<div class="row row-style" data-rownum="${i + 1}">`;
 
             for (let j = 0; j < colValue; j++) {
-              const colData = `<div class="col col-style border border-1 py-2 m-1 text-center fs-6 rounded" data-rownum="${i + 1}" data-colnum="${j + 1}" >R${i + 1} C${j + 1}</div>`;
+              const colData = `<div class="col col-style border border-1 py-2 m-1 text-center fs-6 rounded" data-rownum="${i + 1}" data-colnum="${j + 1}" id="R${i + 1}C${j + 1}">R${i + 1} C${j + 1}</div>`;
               template = template + colData;
               //將資料存取入陣列
               arrayData.push({
@@ -237,9 +245,6 @@
           //排列下方的TR配對List
           arrayData.forEach(function (item, index) {
 
-            // arrayList += `<option value="${index + 1}">T${index + 1}</option></select>`;
-
-
             // 排列下方的 TR 配對 List
             //map: 將T元素映射到新陣列
             arrayTransmitter = arrayData.map(function (item, index) {
@@ -253,19 +258,20 @@
 
 
             //下拉式選單元件
-            // displayTableContent.innerHTML = `<div class="d-flex"><select class="form-select" aria-label="Default select example"><option selected>選擇 Transmitter${arrayTransmitter.join('')}</option></select><select class="form-select" aria-label="Default select example"><option selected>選擇 Receiver${arrayReceiver.join('')}</option></select></div>`; //修改
             allDisplayTableContent();
 
 
           })
           selectTheWall();
+
+
         }
 
 
         //將arrayData數量整個拉出來,幾個電視牆下面就有幾個list的功能
         function allDisplayTableContent() {
           let allNumber = "";
-          //因為簡潔，宣告變數
+          //簡潔，所以宣告變數
           arrayData.forEach(function (item, index) {
             const transmitterList = `<select class="form-select my-2 me-2" aria-label="Default select example" id="Trow${item.row}col${item.col}" disabled><option>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
             const receiverList = `<select class="form-select my-2" aria-label="Default select example" id="Rrow${item.row}col${item.col}" disabled><option>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
@@ -279,9 +285,8 @@
         }
 
 
-        //點擊上方電視牆 >> 呈現白色
+        //點擊上方電視牆 >> 呈現背景白色
         //這個功能切記塞到handleRowChange()內 才能執行
-
         function selectTheWall() {
           const selectTVWall = document.querySelectorAll('.col');
           const selectLists = document.querySelectorAll('select');
@@ -306,7 +311,6 @@
               console.log(targetColnum);
 
               //點擊上方電視牆 >> 下方List呈現readonly或可以編輯
-              //****這裡還要再改****
               selectLists.forEach(function (e) {
                 //先移除所有的readonly
                 e.disabled = false;
@@ -316,31 +320,89 @@
 
                   //取出option內的value(Transmitter) 並執行innerHTML
                   e.addEventListener('change', function () {
+
+                    const key = `R${targetRownum}C${targetColnum}`;
+                    const selectedTransmitter = `Transmitter${e.options[e.selectedIndex].value}`; //`Transmitter${e.value}`
+
+                    //判斷key(colName)有無重複,若沒有則push到tvWallInformation
+                    if (!tvWallInformation.has(key)) {
+                      tvWallInformation.set(key, {
+                        colName: key,
+                        transmitterName: selectedTransmitter,
+                        receiverName: ''
+                      });
+
+
+                    } else {
+                      //若遇到不同的key(colName)，將selectedTransmitter新增到tvWallInformation
+                      tvWallInformation.get(key).transmitterName = selectedTransmitter;  //.push(selectedTransmitter)
+
+                    }
+
+                    //抓Map物件裡面的transmitterName & receiverName
+                    document.getElementById(key).innerHTML = `${key}<br>${(tvWallInformation.get(key).transmitterName)}&nbsp&nbsp${(tvWallInformation.get(key).receiverName)}`;
+
                     console.log(`Transmitter${e.value}`);
+                    console.log(`arrayTransmitter${arrayTransmitter}`);
 
                   })
+
+
 
                 } else if (e.id === `Rrow${targetRownum}col${targetColnum}`) {
                   console.log(`Rrow${targetRownum}col${targetColnum}`);
+
                   //取出option內的value(Reciever) 並執行innerHTML
                   e.addEventListener('change', function () {
-                    console.log(`Receiver${e.value}`);
+
+                    const selectedReceiver = `Receiver${e.options[e.selectedIndex].value}`;
+                    const key = `R${targetRownum}C${targetColnum}`;
+
+                    //判斷key(colName)有無重複，若沒有，則取得另外一個selectedReceiver
+                    if (!tvWallInformation.has(key)) {
+                      tvWallInformation.set(key, {
+                        colName: key,
+                        transmitterName: '',
+                        receiverName: selectedReceiver
+                      });
+
+
+                    } else {
+                      //取得另外一個selectedReceiver
+                      tvWallInformation.get(key).receiverName = selectedReceiver;
+
+                    }
+
+                    //抓Map物件裡面的transmitterName & receiverName (覆蓋掉上面，才能顯示出最新數據)
+                    document.getElementById(key).innerHTML = `${key}<br>${(tvWallInformation.get(key).transmitterName)}&nbsp&nbsp${(tvWallInformation.get(key).receiverName)}`;
+
+
+                    console.log(tvWallInformation);  //抓的到，且map會自動更新到最新，最好放置位置，這個到最後要儲存起來，以免按Next鍵就消失
+
+
 
                   })
-
 
                 } else {
                   //id符合條件才能編輯下拉式選單
                   e.disabled = true;
 
+
                 }
+
+
               })
 
             })
-
-
           })
+
+
+
         }
+
+
+
+
 
 
 

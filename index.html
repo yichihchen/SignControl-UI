@@ -202,6 +202,9 @@
         //放置Receiver所產生的陣列，從系統其他頁面直接新增的R設備
         let arrayReceiver = [];
 
+        const transmitterData = [1, 2, 3, 4, 5, 6, 7, 8, 9];  //這裡是用來接create Transimitter 那一頁的資料，之後再將Transmitter map物件依據的陣列改為這個就好
+        const receiverData = [1, 2, 3, 4];  //這裡是用來接create receiver那一頁的資料，之後再將receiver map物件依據的陣列改為這個就好
+
         //轉換成Map物件，以利後續map操作
         const tvWallInformation = new Map();
 
@@ -241,6 +244,8 @@
           }
           displayGrid.innerHTML = template;
 
+          console.log(`arrayData${arrayData}`);
+
 
           //排列下方的TR配對List
           arrayData.forEach(function (item, index) {
@@ -251,11 +256,11 @@
               return `<option value="${index + 1}" id="Trow${item.row}col${item.col}value${index + 1}">T${index + 1}</option>`;
             });
 
-            //map: 將R元素映射到新陣列
+            //map: 將R元素映射到新陣列，這裡不一定要依照arrayData *****
             arrayReceiver = arrayData.map(function (item, index) {
               return `<option value="${index + 1}" id="Rrow${item.row}col${item.col}value${index + 1}">R${index + 1}</option>`; //修改:這裡的 arrayData(create receiver) & index要依照source device有幾台來決定
             });
-
+            console.log(`arrayReceiver${arrayReceiver}`);
 
             //下拉式選單元件
             allDisplayTableContent();
@@ -263,6 +268,7 @@
 
           })
           selectTheWall();
+
 
 
         }
@@ -275,7 +281,8 @@
           arrayData.forEach(function (item, index) {
             const transmitterList = `<select class="form-select my-2 me-2" aria-label="Default select example" id="Trow${item.row}col${item.col}" disabled><option>選擇 Transmitter${arrayTransmitter.join('')}</option></select>`;
             const receiverList = `<select class="form-select my-2" aria-label="Default select example" id="Rrow${item.row}col${item.col}" disabled><option>選擇 Receiver${arrayReceiver.join('')}</option></select>`;
-            //下面修改
+
+            //***下面之後修改成sourceDevice***
             const sourceDeviceList = `<select class="form-select my-2" aria-label="Default select example" disabled><option>選擇 Source Device${arrayReceiver.join('')}</option></select>`;
 
 
@@ -405,7 +412,7 @@
 
 
 
-
+        console.log(`arrayData${arrayData}`);
 
 
 

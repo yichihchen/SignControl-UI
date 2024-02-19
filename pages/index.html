@@ -384,21 +384,7 @@
                       transmitterName: item.transmitterName
                     }));
                     console.log(transmitterGet);
-
-                    // //相同的transmitterName作分類
-                    // const groupedByTransmitter = transmitterGet.reduce(function (result, item) {
-                    //   const transmitterName = item.transmitterName;
-                    //   if (result[transmitterName]) {
-                    //     result[transmitterName].push(item);
-                    //   } else {
-                    //     result[transmitterName] = [item];
-                    //   }
-                    //   return result;
-                    // }, {});
-
-                    // console.log(groupedByTransmitter);
-                    // //取得groupedByTransmitter內的colName當作id
-
+                    
 
                     // 將所有的transmitterName的值由小到大排列，並保留 transmitterGet陣列內容
                     const sortedTransmitterGet = [...transmitterGet].sort((a, b) => a.transmitterName.localeCompare(b.transmitterName));
@@ -408,6 +394,7 @@
                       const element = document.getElementById(item.colName);
                       console.log(item.colName);
 
+                      element.classList.remove(`${item.transmitterName}`);
                       //添加同一個Transmitter同一種背景顏色功能
                       element.classList.add(`${item.transmitterName}`);
                     })

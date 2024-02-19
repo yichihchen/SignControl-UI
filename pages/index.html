@@ -414,33 +414,6 @@
 
 
 
-        // //功能: transmitter相同的col顯示同一個顏色
-        // function transmitterColor() {
-        //   //將map物件的colName和transmitterName整理成陣列
-        //   const valuesArray = Array.from(tvWallInformation.values());   //不需要用...三元運算子展開tvWallInformation
-        //   const transmitterGet = valuesArray.map(item => ({
-        //     colName: item.colName,
-        //     transmitterName: item.transmitterName
-        //   }));
-        //   console.log(transmitterGet);
-
-
-        //   // 將所有的transmitterName的值由小到大排列，並保留 transmitterGet陣列內容
-        //   const sortedTransmitterGet = [...transmitterGet].sort((a, b) => a.transmitterName.localeCompare(b.transmitterName));
-        //   console.log(sortedTransmitterGet);
-
-
-        //   //添加同一個Transmitter同一種背景顏色功能
-        //   sortedTransmitterGet.forEach(function (item) {
-        //     const element = document.getElementById(item.colName);
-        //     console.log(item.colName);
-
-        //     element.classList.remove(`${item.transmitterName}`);  //***無法remove*** 為避免更換Transmitter下拉選單無法更換顏色問題，加上監聽
-        //     console.log(element);
-        //     //添加同一個Transmitter同一種背景顏色功能
-        //     element.classList.add(`${item.transmitterName}`);
-        //   })
-        // }
 
 
 

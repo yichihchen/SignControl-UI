@@ -9,8 +9,8 @@
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>index</title>
-  <script type="module" crossorigin src="/SignControl-UI/assets/main-7dc8fe00.js"></script>
-  <link rel="stylesheet" href="/SignControl-UI/assets/main-52f34843.css">
+  <script type="module" crossorigin src="/SignControl-UI/assets/main-372d42b8.js"></script>
+  <link rel="stylesheet" href="/SignControl-UI/assets/main-6bafe376.css">
 </head>
 
 <body>
@@ -269,8 +269,6 @@
           })
           selectTheWall();
 
-
-
         }
 
 
@@ -385,6 +383,46 @@
 
 
                     console.log(tvWallInformation);  //抓的到，且map會自動更新到最新，最好放置位置，這個到最後要儲存起來，以免按Next鍵就消失
+
+
+                    //功能: transmitter相同的col顯示同一個顏色
+                    //將map物件的colName和transmitterName整理成陣列
+                    const valuesArray = Array.from(tvWallInformation.values());   //不需要用...三元運算子展開tvWallInformation
+                    const transmitterGet = valuesArray.map(item => ({
+                      colName: item.colName,
+                      transmitterName: item.transmitterName
+                    }));
+                    console.log(transmitterGet);
+
+                    // //相同的transmitterName作分類
+                    // const groupedByTransmitter = transmitterGet.reduce(function (result, item) {
+                    //   const transmitterName = item.transmitterName;
+                    //   if (result[transmitterName]) {
+                    //     result[transmitterName].push(item);
+                    //   } else {
+                    //     result[transmitterName] = [item];
+                    //   }
+                    //   return result;
+                    // }, {});
+
+                    // console.log(groupedByTransmitter);
+                    // //取得groupedByTransmitter內的colName當作id
+
+
+                    // 將所有的transmitterName的值由小到大排列，並保留 transmitterGet陣列內容
+                    const sortedTransmitterGet = [...transmitterGet].sort((a, b) => a.transmitterName.localeCompare(b.transmitterName));
+                    console.log(sortedTransmitterGet);
+
+                    sortedTransmitterGet.forEach(function (item) {
+                      const element = document.getElementById(item.colName);
+                      console.log(item.colName);
+
+                      //添加同一個Transmitter同一種背景顏色功能
+                      element.classList.add(`${item.transmitterName}`);
+                    })
+
+
+
 
 
 

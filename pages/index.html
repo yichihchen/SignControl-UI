@@ -289,22 +289,26 @@
 
           selectTVWall.forEach(function (item) {
             item.addEventListener('click', function (e) {
+              const targetRownum = e.target.dataset.rownum;  //正確取得data-rownum
+              const targetColnum = e.target.dataset.colnum;  //正確取得data-colnum
+
+              //使用for迴圈來移除之前所有的Transmitter背景樣式，預設Transmitter背景種類10種，可依據實際情況調整
+              //避免點擊要重新選擇Transmitter時，不知道哪一個螢幕要更新
+              for (let i = 1; i <= 10; i++) {
+                document.getElementById(`R${targetRownum}C${targetColnum}`).classList.remove(`Transmitter${i}`);
+              }
               selectTVWall.forEach(function (otherItem) {
 
                 //再迴圈一次要清掉反白的css
                 otherItem.classList.remove('highlight');
-                //先把已反白的col的id抓出來
-                console.log(item);
+                //使用for迴圈來移除之前所有的Transmitter背景樣式，預設Transmitter背景種類10種，可依據實際情況調整
+
 
               })
               // 將被點擊的元素加上反白效果
               e.target.classList.add('highlight');
 
-              const targetRownum = e.target.dataset.rownum;  //正確取得data-rownum
-              const targetColnum = e.target.dataset.colnum;  //正確取得data-colnum
-
-              console.log(targetRownum);
-              console.log(targetColnum);
+             
 
               //點擊上方電視牆 >> 下方List呈現readonly或可以編輯
               selectLists.forEach(function (e) {
